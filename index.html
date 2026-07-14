@@ -228,6 +228,39 @@
   .card-chips{display:flex; flex-wrap:wrap; gap:7px;}
   .card-chips .chip{font-size:11.5px; padding:5px 9px; background:var(--paper);}
 
+  /* ---------- CASE STUDY ---------- */
+  code{
+    font-family:'IBM Plex Mono', monospace; font-size:0.92em;
+    background:var(--paper-2); padding:1px 5px; border-radius:4px;
+  }
+  .case-intro{
+    background:var(--white); border:1px solid var(--line); border-radius:10px;
+    padding:26px 28px; margin-bottom:28px;
+  }
+  .case-intro p{color:#333A4D; font-size:15px; max-width:74ch;}
+  .case-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:20px;
+  }
+  @media (max-width:800px){ .case-grid{grid-template-columns:1fr;} }
+  .case-block{
+    background:var(--white); border:1px solid var(--line); border-radius:10px;
+    padding:22px 24px;
+  }
+  .case-block-title{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px;
+    text-transform:uppercase; letter-spacing:0.05em; color:var(--violet);
+    margin-bottom:12px;
+  }
+  .case-list{list-style:none;}
+  .case-list li{
+    position:relative; padding-left:16px; margin-bottom:11px;
+    font-size:14px; color:#333A4D; line-height:1.55;
+  }
+  .case-list li::before{
+    content:'—'; position:absolute; left:0; color:var(--line);
+  }
+  .case-list li:last-child{margin-bottom:0;}
+
   /* ---------- FEATURED PROJECT ---------- */
   .featured{
     background:var(--ink); color:var(--paper);
@@ -285,6 +318,8 @@
     <ul class="navlinks">
       <li><a href="#sobre">Sobre</a></li>
       <li><a href="#sistemas">Sistemas</a></li>
+      <li><a href="#estudo-de-caso">Estudo de caso</a></li>
+      <li><a href="#pessoais">Pessoais</a></li>
       <li><a href="#projeto-ia">Projeto IA</a></li>
       <li><a href="#contato">Contato</a></li>
     </ul>
@@ -447,29 +482,101 @@
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-top">
-        <div>
-          <div class="card-id">FST-05</div>
-          <div class="card-title">Agora VAi! 2.0</div>
-        </div>
-        <span class="status-pill status-live"><span class="pdot"></span>Em produção</span>
-      </div>
-      <p class="card-desc">
-        App de finanças pessoais com registro de gastos via WhatsApp API e dashboard preditivo
-        de fluxo de caixa.
-      </p>
-      <div class="card-chips">
-        <span class="chip">WhatsApp API</span><span class="chip">Dashboard preditivo</span><span class="chip">Finanças pessoais</span>
-      </div>
+  </div>
+</section>
+
+<section id="estudo-de-caso">
+  <div class="section-head">
+    <span class="section-num mono">03</span>
+    <div>
+      <div class="section-title">Estudo de caso — Sistema de Inspeção de Equipamentos de TI</div>
+      <div class="section-sub">Desenvolvedora Full Stack — projeto individual, ponta a ponta.</div>
+    </div>
+  </div>
+
+  <div class="case-intro">
+    <p>
+      Projetei e desenvolvi uma aplicação web full stack sobre a plataforma Google Apps Script para
+      digitalizar o ciclo de vida de equipamentos de TI — entrega, inspeção técnica e offboarding —
+      com backend serverless em JavaScript e frontend em HTML/CSS/JS puro servido via <code>HtmlService</code>.
+    </p>
+    <div class="card-chips" style="margin-top:16px;">
+      <span class="chip">Google Apps Script (V8)</span><span class="chip">JavaScript</span>
+      <span class="chip">HTML5 / CSS3</span><span class="chip">Google Sheets API</span>
+      <span class="chip">Google Drive API</span><span class="chip">Gmail API</span><span class="chip">Chart.js</span>
+    </div>
+  </div>
+
+  <div class="case-grid">
+    <div class="case-block">
+      <div class="case-block-title">Backend &amp; arquitetura</div>
+      <ul class="case-list">
+        <li>Unifiquei dois sistemas com bases de código separadas (Entrega e Offboarding) em um único <code>Code.gs</code>, com roteamento condicional via <code>doGet(e)</code> e parâmetros de query.</li>
+        <li>Implementei leitura dinâmica de planilhas por nome de coluna, tornando o sistema resiliente a reordenação de colunas na fonte de dados.</li>
+        <li>Integrei uma planilha de inventário externa para lookup de equipamento por patrimônio, com normalização de string e parsing seguro de tipos numéricos.</li>
+        <li>Estruturei a persistência com verificação/auto-criação de cabeçalho e uma rotina própria de migração de dados históricos após mudança de schema.</li>
+      </ul>
     </div>
 
+    <div class="case-block">
+      <div class="case-block-title">Geração de documentos &amp; mídia</div>
+      <ul class="case-list">
+        <li>Gerei PDFs server-side via conversão HTML→PDF, com tabelas de dados, grid de fotos e blocos de assinatura montados dinamicamente.</li>
+        <li>Implementei captura de assinatura digital via <code>&lt;canvas&gt;</code>, com suporte a mouse e toque.</li>
+        <li>Otimizei o upload de fotos no client-side: compressão e redimensionamento antes do envio, reduzindo o payload trafegado.</li>
+        <li>Automatizei a organização de arquivos no Google Drive, com criação recursiva de pastas por hierarquia e permissionamento programático.</li>
+      </ul>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-title">Qualidade &amp; confiabilidade</div>
+      <ul class="case-list">
+        <li>Criei um pipeline próprio de validação pré-deploy, com checagem de sintaxe e verificação estrutural de balanceamento de tags.</li>
+        <li>Identifiquei e corrigi proativamente 6 bugs de produção antes de impactar usuários — de condição de corrida a sanitização insuficiente de nomes de arquivo.</li>
+        <li>Implementei retry com backoff no client para lidar com instabilidade transiente nas chamadas ao servidor.</li>
+      </ul>
+    </div>
+
+    <div class="case-block">
+      <div class="case-block-title">Analytics</div>
+      <ul class="case-list">
+        <li>Construí um dashboard analítico com Chart.js, consumindo dados agregados no servidor.</li>
+        <li>Filtro por mês, métricas calculadas (totais, percentuais, últimas ocorrências) e alternância entre dois conjuntos de dados sem recarregar a página.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="pessoais">
+  <div class="section-head">
+    <span class="section-num mono">04</span>
+    <div>
+      <div class="section-title">Projetos pessoais</div>
+      <div class="section-sub">Construídos por conta própria, fora do expediente.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-left:0;">
+    <div class="card-top">
+      <div>
+        <div class="card-id">PESSOAL-01</div>
+        <div class="card-title">Agora VAi! 2.0</div>
+      </div>
+      <span class="status-pill status-live"><span class="pdot"></span>Em uso pessoal</span>
+    </div>
+    <p class="card-desc">
+      App de finanças pessoais com registro de gastos via WhatsApp API e dashboard preditivo
+      de fluxo de caixa.
+    </p>
+    <div class="card-chips">
+      <span class="chip">WhatsApp API</span><span class="chip">Dashboard preditivo</span><span class="chip">Finanças pessoais</span>
+    </div>
   </div>
 </section>
 
 <section id="projeto-ia">
   <div class="section-head">
-    <span class="section-num mono">03</span>
+    <span class="section-num mono">05</span>
     <div>
       <div class="section-title">Projeto em destaque — IA & LLMs</div>
       <div class="section-sub">O que estou construindo agora, fora do expediente.</div>
@@ -509,7 +616,7 @@
 
 <section id="contato">
   <div class="section-head">
-    <span class="section-num mono">04</span>
+    <span class="section-num mono">06</span>
     <div>
       <div class="section-title">Contato</div>
     </div>
