@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erika Machado Firmino — Dados & IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10182B;
+    --paper:#EEF0F4;
+    --paper-2:#E2E5EC;
+    --line:#C7CCD6;
+    --amber:#E8A33D;
+    --teal:#2F8F82;
+    --violet:#5B4FE8;
+    --muted:#5B6172;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit;}
+
+  :focus-visible{outline:2px solid var(--violet); outline-offset:3px;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(238,240,244,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:1120px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 24px;
+  }
+  .logo{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14px; font-weight:600; letter-spacing:0.02em;
+  }
+  .logo span{color:var(--violet);}
+  .navlinks{display:flex; gap:28px; list-style:none;}
+  .navlinks a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px; text-decoration:none; color:var(--muted);
+    text-transform:uppercase; letter-spacing:0.06em;
+    transition:color 0.15s ease;
+  }
+  .navlinks a:hover{color:var(--ink);}
+  .navtoggle{display:none; background:none; border:none; cursor:pointer;}
+
+  @media (max-width:720px){
+    .navlinks{
+      position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; background:var(--paper);
+      border-bottom:1px solid var(--line);
+      padding:16px 24px; gap:16px;
+      display:none;
+    }
+    .navlinks.open{display:flex;}
+    .navtoggle{display:block;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:1120px; margin:0 auto;
+    padding:72px 24px 48px;
+    display:grid; grid-template-columns:1.3fr 1fr; gap:48px;
+    align-items:start;
+  }
+  @media (max-width:900px){ .hero{grid-template-columns:1fr;} }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px; color:var(--violet);
+    text-transform:uppercase; letter-spacing:0.08em;
+    display:flex; align-items:center; gap:8px;
+    margin-bottom:18px;
+  }
+  .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 0 3px rgba(47,143,130,0.18);
+    display:inline-block;
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:1;} 50%{opacity:0.45;}
+  }
+
+  h1.name{
+    font-size:clamp(34px,5vw,54px);
+    font-weight:700; letter-spacing:-0.01em;
+    line-height:1.05;
+    margin-bottom:16px;
+  }
+  .role{
+    font-size:19px; color:var(--muted); font-weight:500;
+    margin-bottom:22px; max-width:52ch;
+  }
+  .role strong{color:var(--ink); font-weight:600;}
+
+  .hero-actions{display:flex; gap:12px; flex-wrap:wrap;}
+  .btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px; text-decoration:none;
+    padding:11px 18px; border-radius:6px;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .btn-primary{background:var(--ink); color:var(--paper);}
+  .btn-primary:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(16,24,43,0.25);}
+  .btn-ghost{border:1px solid var(--line); color:var(--ink); background:transparent;}
+  .btn-ghost:hover{border-color:var(--ink);}
+
+  /* status board card in hero */
+  .statboard{
+    background:var(--ink); color:var(--paper);
+    border-radius:10px; padding:22px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+  }
+  .statboard-head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-bottom:14px; margin-bottom:14px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    color:rgba(238,240,244,0.55);
+    font-size:11px; letter-spacing:0.05em; text-transform:uppercase;
+  }
+  .statrow{
+    display:flex; justify-content:space-between;
+    padding:8px 0; border-bottom:1px dashed rgba(255,255,255,0.1);
+  }
+  .statrow:last-child{border-bottom:none;}
+  .statrow span:first-child{color:rgba(238,240,244,0.6);}
+  .statrow span:last-child{font-weight:600;}
+  .statrow .ok{color:#6FD3A8;}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{max-width:1120px; margin:0 auto; padding:64px 24px;}
+  .section-head{
+    display:flex; align-items:baseline; gap:14px;
+    margin-bottom:36px; flex-wrap:wrap;
+  }
+  .section-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px; color:var(--violet);
+  }
+  .section-title{font-size:28px; font-weight:600;}
+  .section-sub{
+    color:var(--muted); font-size:15px; margin-top:6px; max-width:60ch;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px;}
+  @media (max-width:800px){ .about-grid{grid-template-columns:1fr;} }
+  .about-text p{margin-bottom:14px; color:#333A4D; max-width:60ch;}
+
+  .info-list{list-style:none; margin-top:8px;}
+  .info-list li{
+    display:flex; gap:10px; padding:10px 0;
+    border-bottom:1px solid var(--line);
+    font-size:14.5px;
+  }
+  .info-list li:last-child{border-bottom:none;}
+  .info-list .k{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px;
+    color:var(--muted); text-transform:uppercase; letter-spacing:0.04em;
+    min-width:110px; padding-top:2px;
+  }
+
+  .chiprow{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;}
+  .chip{
+    font-family:'IBM Plex Mono', monospace; font-size:12px;
+    padding:6px 11px; border:1px solid var(--line); border-radius:5px;
+    background:var(--white); color:var(--ink);
+  }
+
+  /* ---------- SYSTEMS / PIPELINE ---------- */
+  .pipeline{position:relative;}
+  .pipeline::before{
+    content:'';
+    position:absolute; left:15px; top:8px; bottom:8px; width:2px;
+    background:linear-gradient(var(--line), var(--line) 60%, transparent);
+  }
+  .card{
+    position:relative; margin-left:44px; margin-bottom:28px;
+    background:var(--white); border:1px solid var(--line); border-radius:10px;
+    padding:26px 26px 24px;
+  }
+  .card::before{
+    content:'';
+    position:absolute; left:-35px; top:30px;
+    width:11px; height:11px; border-radius:50%;
+    background:var(--paper); border:2px solid var(--violet);
+  }
+  .card-top{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    gap:16px; flex-wrap:wrap; margin-bottom:10px;
+  }
+  .card-id{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--muted);
+  }
+  .card-title{font-size:19px; font-weight:600; margin-top:2px;}
+  .status-pill{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px;
+    padding:5px 10px; border-radius:20px; white-space:nowrap;
+  }
+  .status-live{background:rgba(47,143,130,0.12); color:var(--teal);}
+  .status-live .pdot{background:var(--teal);}
+  .status-dev{background:rgba(232,163,61,0.14); color:#9c6a1c;}
+  .status-dev .pdot{background:var(--amber);}
+  .pdot{width:6px; height:6px; border-radius:50%; display:inline-block;}
+
+  .card-desc{color:#333A4D; font-size:14.5px; margin:10px 0 14px; max-width:64ch;}
+  .card-chips{display:flex; flex-wrap:wrap; gap:7px;}
+  .card-chips .chip{font-size:11.5px; padding:5px 9px; background:var(--paper);}
+
+  /* ---------- FEATURED PROJECT ---------- */
+  .featured{
+    background:var(--ink); color:var(--paper);
+    border-radius:14px; padding:40px;
+    display:grid; grid-template-columns:1fr 1fr; gap:36px;
+  }
+  @media (max-width:800px){ .featured{grid-template-columns:1fr; padding:28px;} }
+  .featured h3{font-size:24px; margin-bottom:10px;}
+  .featured p{color:rgba(238,240,244,0.7); font-size:14.5px; margin-bottom:16px; max-width:56ch;}
+  .featured .chip{background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.14); color:var(--paper);}
+
+  .terminal{
+    background:#0B1220; border-radius:8px; overflow:hidden;
+    border:1px solid rgba(255,255,255,0.1);
+  }
+  .terminal-bar{
+    display:flex; gap:6px; padding:10px 14px;
+    background:rgba(255,255,255,0.04);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .terminal-bar span{width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,0.15);}
+  .terminal-body{
+    padding:16px 18px; font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px; line-height:1.7; color:#9FE3C7;
+  }
+  .terminal-body .muted2{color:rgba(255,255,255,0.4);}
+  .terminal-body .warn{color:var(--amber);}
+
+  /* ---------- CONTACT ---------- */
+  .contact-box{
+    background:var(--white); border:1px solid var(--line); border-radius:10px;
+    padding:36px; display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:20px;
+  }
+  .contact-links{display:flex; gap:12px; flex-wrap:wrap;}
+
+  footer{
+    text-align:center; padding:32px 24px; color:var(--muted);
+    font-family:'IBM Plex Mono', monospace; font-size:12px;
+    border-top:1px solid var(--line);
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .dot{animation:none;}
+    .btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">erika<span>.</span>firmino</div>
+    <button class="navtoggle mono" aria-label="Abrir menu" onclick="document.querySelector('.navlinks').classList.toggle('open')">☰</button>
+    <ul class="navlinks">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#sistemas">Sistemas</a></li>
+      <li><a href="#projeto-ia">Projeto IA</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero" style="padding-top:56px;">
+  <div>
+    <div class="eyebrow"><span class="dot"></span> disponível para novas oportunidades</div>
+    <h1 class="name">Erika Machado Firmino</h1>
+    <p class="role">
+      Construo <strong>sistemas internos</strong> que automatizam processos administrativos e financeiros —
+      hoje migrando esse repertório para <strong>Análise de Dados e IA & LLMs</strong>.
+      Baseada em Fortaleza, CE.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#sistemas">Ver sistemas em produção</a>
+      <a class="btn btn-ghost" href="mailto:erikafirmino.ads@gmail.com">Falar comigo</a>
+    </div>
+  </div>
+
+  <div class="statboard">
+    <div class="statboard-head">
+      <span>status.log</span>
+      <span>fortaleza_ce</span>
+    </div>
+    <div class="statrow"><span>sistemas_em_producao</span><span class="ok">05</span></div>
+    <div class="statrow"><span>cargo_atual</span><span>assistente_adm</span></div>
+    <div class="statrow"><span>objetivo</span><span>analista_dados_ia</span></div>
+    <div class="statrow"><span>stack_principal</span><span>gas / python / sql</span></div>
+    <div class="statrow"><span>projeto_ia</span><span class="ok">em_build</span></div>
+  </div>
+</section>
+
+<section id="sobre">
+  <div class="section-head">
+    <span class="section-num mono">01</span>
+    <div>
+      <div class="section-title">Sobre</div>
+      <div class="section-sub">Formação, trajetória e stack técnica.</div>
+    </div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        Comecei como Auxiliar Administrativa na Fortes Tecnologia e, ao identificar processos manuais
+        repetitivos no dia a dia, passei a construir sistemas para resolvê-los — do zero, sem esperar
+        que alguém pedisse. Hoje são cinco sistemas em produção, usados pela própria Diretoria.
+      </p>
+      <p>
+        Esse caminho me levou naturalmente para dados: cada sistema que construí gera informação que
+        precisa ser lida, cruzada e transformada em decisão. É essa ponte — entre automação, dados e IA —
+        que estou aprofundando agora, com foco em me tornar Analista de Dados especializada em IA & LLMs.
+      </p>
+    </div>
+
+    <ul class="info-list mono">
+      <li><span class="k">formação</span><span>ADS — Estácio do Ceará (2022–2025)</span></li>
+      <li><span class="k">pós-graduação</span><span>Gestão e Governança de TI — Anhanguera (concluída, 2026)</span></li>
+      <li><span class="k">em andamento</span><span>Análise de Dados — Descomplica</span></li>
+      <li><span class="k">cargo atual</span><span>Assistente Administrativa — Fortes Tecnologia</span></li>
+      <li><span class="k">localização</span><span>Fortaleza, CE</span></li>
+    </ul>
+  </div>
+
+  <div class="chiprow">
+    <span class="chip">Google Apps Script</span>
+    <span class="chip">Python</span>
+    <span class="chip">JavaScript</span>
+    <span class="chip">SQL (MySQL / Oracle)</span>
+    <span class="chip">Power BI</span>
+    <span class="chip">ETL</span>
+    <span class="chip">Streamlit</span>
+    <span class="chip">OpenAI API</span>
+    <span class="chip">Claude API</span>
+    <span class="chip">Google Drive API</span>
+    <span class="chip">Gmail API</span>
+    <span class="chip">SQLite</span>
+    <span class="chip">pdfplumber</span>
+    <span class="chip">ChromaDB</span>
+  </div>
+</section>
+
+<section id="sistemas">
+  <div class="section-head">
+    <span class="section-num mono">02</span>
+    <div>
+      <div class="section-title">Sistemas em produção</div>
+      <div class="section-sub">Construídos para a Fortes Tecnologia, usados no dia a dia da operação.</div>
+    </div>
+  </div>
+
+  <div class="pipeline">
+
+    <div class="card">
+      <div class="card-top">
+        <div>
+          <div class="card-id">FST-01</div>
+          <div class="card-title">Fortes Solicita</div>
+        </div>
+        <span class="status-pill status-live"><span class="pdot"></span>Em produção</span>
+      </div>
+      <p class="card-desc">
+        Gestão de solicitações financeiras com leitura de documentos via OCR e fluxo de aprovação
+        multinível. Aprovado e utilizado diretamente pela Diretoria.
+      </p>
+      <div class="card-chips">
+        <span class="chip">OCR</span><span class="chip">Google Apps Script</span><span class="chip">Fluxo multinível</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div>
+          <div class="card-id">FST-02</div>
+          <div class="card-title">Fortes Estoque TI</div>
+        </div>
+        <span class="status-pill status-live"><span class="pdot"></span>Em produção</span>
+      </div>
+      <p class="card-desc">
+        Controle de ativos e patrimônio de TI, com notificações automáticas integradas via Gmail API.
+      </p>
+      <div class="card-chips">
+        <span class="chip">Gmail API</span><span class="chip">Gestão de ativos</span><span class="chip">Google Apps Script</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div>
+          <div class="card-id">FST-03</div>
+          <div class="card-title">Sistema de Gestão de Contratos</div>
+        </div>
+        <span class="status-pill status-live"><span class="pdot"></span>Em produção</span>
+      </div>
+      <p class="card-desc">
+        Visualização em Kanban e Gantt, com alertas automáticos de vencimento e uso da Claude API
+        para leitura e organização de cláusulas contratuais.
+      </p>
+      <div class="card-chips">
+        <span class="chip">Kanban</span><span class="chip">Gantt</span><span class="chip">Claude API</span><span class="chip">Alertas de vencimento</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div>
+          <div class="card-id">FST-04</div>
+          <div class="card-title">Easy Inventory Integration</div>
+        </div>
+        <span class="status-pill status-live"><span class="pdot"></span>Em produção</span>
+      </div>
+      <p class="card-desc">
+        Pipeline de ETL consumindo API REST paginada, com rotina de auditoria de dados e
+        dashboard de acompanhamento em Chart.js.
+      </p>
+      <div class="card-chips">
+        <span class="chip">ETL</span><span class="chip">API REST paginada</span><span class="chip">Chart.js</span><span class="chip">Auditoria de dados</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div>
+          <div class="card-id">FST-05</div>
+          <div class="card-title">Agora VAi! 2.0</div>
+        </div>
+        <span class="status-pill status-live"><span class="pdot"></span>Em produção</span>
+      </div>
+      <p class="card-desc">
+        App de finanças pessoais com registro de gastos via WhatsApp API e dashboard preditivo
+        de fluxo de caixa.
+      </p>
+      <div class="card-chips">
+        <span class="chip">WhatsApp API</span><span class="chip">Dashboard preditivo</span><span class="chip">Finanças pessoais</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="projeto-ia">
+  <div class="section-head">
+    <span class="section-num mono">03</span>
+    <div>
+      <div class="section-title">Projeto em destaque — IA & LLMs</div>
+      <div class="section-sub">O que estou construindo agora, fora do expediente.</div>
+    </div>
+  </div>
+
+  <div class="featured">
+    <div>
+      <span class="status-pill status-dev" style="margin-bottom:14px;"><span class="pdot"></span>Em desenvolvimento</span>
+      <h3>RAG Contratos</h3>
+      <p>
+        Sistema de gestão de contratos potencializado por IA: leitura automática de PDFs, extração
+        estruturada de dados via LLM e busca semântica sobre o conteúdo contratual — pensado como
+        evolução direta do sistema de contratos que já mantenho em produção.
+      </p>
+      <div class="card-chips">
+        <span class="chip">Python</span><span class="chip">Streamlit</span><span class="chip">OpenAI API</span>
+        <span class="chip">pdfplumber</span><span class="chip">SQLite</span><span class="chip">ChromaDB</span>
+      </div>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar"><span></span><span></span><span></span></div>
+      <div class="terminal-body">
+        <div>$ python extractor.py --contrato ti_042.pdf</div>
+        <div class="muted2">→ lendo PDF com pdfplumber...</div>
+        <div class="muted2">→ extraindo campos via OpenAI API...</div>
+        <div>✓ vigência, partes e valor identificados</div>
+        <div>✓ registro salvo em database.sqlite</div>
+        <div class="warn">⚠ aguardando crédito OpenAI para rodar em lote</div>
+        <div style="margin-top:10px;">$ contratos de teste: 10 (fictícios)</div>
+        <div>$ próximo passo: deploy no Streamlit Cloud →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contato">
+  <div class="section-head">
+    <span class="section-num mono">04</span>
+    <div>
+      <div class="section-title">Contato</div>
+    </div>
+  </div>
+
+  <div class="contact-box">
+    <div>
+      <div style="font-size:18px; font-weight:600; margin-bottom:6px;">Vamos conversar?</div>
+      <div class="mono" style="color:var(--muted); font-size:14px;">erikafirmino.ads@gmail.com · (85) 9 8940-5872</div>
+    </div>
+    <div class="contact-links">
+      <a class="btn btn-primary" href="mailto:erikafirmino.ads@gmail.com">Enviar e-mail</a>
+      <a class="btn btn-ghost" href="https://github.com/erikafirmino" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/erika-firmino-7ba208271" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Fortaleza, CE — construído com Google Apps Script na cabeça e Python nas mãos.
+</footer>
+
+</body>
+</html>
