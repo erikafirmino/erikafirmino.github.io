@@ -331,9 +331,8 @@
     <div class="eyebrow"><span class="dot"></span> disponível para novas oportunidades</div>
     <h1 class="name">Erika Machado Firmino</h1>
     <p class="role">
-      Construo <strong>sistemas internos</strong> que automatizam processos administrativos e financeiros —
-      hoje migrando esse repertório para <strong>Análise de Dados e IA & LLMs</strong>.
-      Baseada em Fortaleza, CE.
+      Automatizo o que era manual. Hoje são <strong>5 sistemas em produção</strong> — e o próximo passo
+      é transformar esses dados em decisão, com <strong>Análise de Dados e IA</strong>.
     </p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="#sistemas">Ver sistemas em produção</a>
@@ -556,7 +555,7 @@
     </div>
   </div>
 
-  <div class="card" style="margin-left:0;">
+  <div class="card" style="margin-left:0; margin-bottom:20px;">
     <div class="card-top">
       <div>
         <div class="card-id">PESSOAL-01</div>
@@ -570,6 +569,58 @@
     </p>
     <div class="card-chips">
       <span class="chip">WhatsApp API</span><span class="chip">Dashboard preditivo</span><span class="chip">Finanças pessoais</span>
+    </div>
+  </div>
+
+  <div class="card" style="margin-left:0;">
+    <div class="card-top">
+      <div>
+        <div class="card-id">PESSOAL-02</div>
+        <div class="card-title">BoraCorrer</div>
+        <div style="color:var(--muted); font-size:13.5px; margin-top:2px;">PWA de corrida/caminhada para iniciantes — projeto solo, do design de arquitetura ao deploy</div>
+      </div>
+      <span class="status-pill status-live"><span class="pdot"></span>Em produção</span>
+    </div>
+    <div class="card-chips" style="margin-bottom:16px;">
+      <span class="chip">React</span><span class="chip">Vite</span><span class="chip">Firebase</span>
+      <span class="chip">Firestore</span><span class="chip">Leaflet</span>
+    </div>
+
+    <div class="case-grid" style="gap:16px;">
+      <div class="case-block" style="background:var(--paper); padding:18px 20px;">
+        <div class="case-block-title">Dados</div>
+        <ul class="case-list">
+          <li>Firestore como fonte primária com <code>localStorage</code> como cache de performance; sessões de treino migradas para subcoleções, com regras de segurança separando coleções privadas e públicas.</li>
+        </ul>
+      </div>
+      <div class="case-block" style="background:var(--paper); padding:18px 20px;">
+        <div class="case-block-title">Backend serverless</div>
+        <ul class="case-list">
+          <li>Google Apps Script como ponte para Google Sheets, protegido com autenticação por token e rate limiting via <code>CacheService</code>.</li>
+        </ul>
+      </div>
+      <div class="case-block" style="background:var(--paper); padding:18px 20px;">
+        <div class="case-block-title">Frontend</div>
+        <ul class="case-list">
+          <li>Timer de treino com máquina de estados para coach de áudio, mapa GPS interativo via Leaflet/OpenStreetMap, geração de imagens no client com Canvas API e exportação de arquivos GPX/TCX.</li>
+        </ul>
+      </div>
+      <div class="case-block" style="background:var(--paper); padding:18px 20px;">
+        <div class="case-block-title">Performance &amp; infra</div>
+        <ul class="case-list">
+          <li>Code splitting com <code>React.lazy</code> + <code>Suspense</code> em 5 rotas, reduzindo o bundle inicial em ~30%. CI/CD via Vercel, PWA completo com instalação adaptada por plataforma.</li>
+        </ul>
+      </div>
+      <div class="case-block" style="background:var(--paper); padding:18px 20px; grid-column:1/-1;">
+        <div class="case-block-title">Engenharia de produto</div>
+        <ul class="case-list">
+          <li>Onboarding adaptativo que ajusta o plano semanal (2/3/4 dias) conforme disponibilidade do usuário; gamificação com progressão automática 5K→10K.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;">
+      <a class="btn btn-primary" href="https://bora-correr-mu.vercel.app" target="_blank" rel="noopener">Ver projeto ao vivo →</a>
     </div>
   </div>
 </section>
