@@ -623,6 +623,58 @@
       <a class="btn btn-primary" href="https://bora-correr-mu.vercel.app" target="_blank" rel="noopener">Ver projeto ao vivo →</a>
     </div>
   </div>
+
+  <div class="card" style="margin-left:0; margin-top:20px;">
+    <div class="card-top">
+      <div>
+        <div class="card-id">PESSOAL-03</div>
+        <div class="card-title">VeloTrack</div>
+        <div style="color:var(--muted); font-size:13.5px; margin-top:2px;">PWA de treino indoor de ciclismo com sensor Bluetooth — projeto solo, do design de arquitetura ao deploy</div>
+      </div>
+      <span class="status-pill status-live"><span class="pdot"></span>Em produção</span>
+    </div>
+    <div class="card-chips" style="margin-bottom:16px;">
+      <span class="chip">JavaScript</span><span class="chip">Web Bluetooth API</span>
+      <span class="chip">Google Apps Script</span><span class="chip">Chart.js</span>
+    </div>
+
+    <div class="case-grid" style="gap:16px;">
+      <div class="case-block" style="background:var(--paper); padding:18px 20px;">
+        <div class="case-block-title">Hardware / IoT</div>
+        <ul class="case-list">
+          <li>Integração com sensor de velocidade Bluetooth via protocolo CSC (<code>UUID 0x1816</code>), com tratamento de contagem cumulativa de rotações para cálculo preciso de velocidade e distância em tempo real.</li>
+        </ul>
+      </div>
+      <div class="case-block" style="background:var(--paper); padding:18px 20px;">
+        <div class="case-block-title">Backend serverless</div>
+        <ul class="case-list">
+          <li>Google Apps Script como API para persistência de histórico de treinos em Google Sheets, com workaround de CORS (<code>no-cors</code> na escrita, JSONP na leitura).</li>
+        </ul>
+      </div>
+      <div class="case-block" style="background:var(--paper); padding:18px 20px;">
+        <div class="case-block-title">Frontend</div>
+        <ul class="case-list">
+          <li>Dashboard de métricas ao vivo (velocidade, distância, cadência), gráficos de performance com Chart.js e reprodução de música via Spotify Web Playback SDK (OAuth PKCE).</li>
+        </ul>
+      </div>
+      <div class="case-block" style="background:var(--paper); padding:18px 20px;">
+        <div class="case-block-title">Arquitetura &amp; infra</div>
+        <ul class="case-list">
+          <li>Refatoração de estrutura monolítica para arquitetura modular, separando responsabilidades por módulo. PWA com estratégia Network First e uso da WakeLock API para manter a tela ativa durante o treino.</li>
+        </ul>
+      </div>
+      <div class="case-block" style="background:var(--paper); padding:18px 20px; grid-column:1/-1;">
+        <div class="case-block-title">Engenharia de produto / debugging</div>
+        <ul class="case-list">
+          <li>Investigação e correção de discrepância entre dados exibidos no app e dados persistidos, com logging estruturado e testes iterativos de filtragem de leituras do sensor.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;">
+      <a class="btn btn-primary" href="https://velotrack-one.vercel.app/" target="_blank" rel="noopener">Ver projeto ao vivo →</a>
+    </div>
+  </div>
 </section>
 
 <section id="projeto-ia">
